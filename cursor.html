@@ -57,6 +57,12 @@
 
     var draw = function() {
       drawCollections(context);
+
+      // Write the math
+      context.font = "100px Arial";
+      context.textAlign = "center";
+      context.textBaseline = "middle";
+      context.fillText(math, width / 2, height / 9);
     }
 
     var findPrimaryFinger = function(frame) {
@@ -152,11 +158,9 @@
         stopDrag(position);
     }
 
+    math = "";
     var writeMath = function(string) {
-      context.font = "100px Arial";
-      context.textAlign = "center";
-      context.textBaseline = "middle";
-      context.fillText(string, width / 2, height / 10);
+      math = string;
     }
 
     controller.on( 'frame' , function(frame){

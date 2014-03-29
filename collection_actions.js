@@ -113,6 +113,9 @@ function stopDrag() {
             var temp = collections.pop();
             var i = collections.indexOf(selectedCollection);
             collections[i] = temp;
+            var a = closestCollection.width;
+            var b = selectedCollection.width;
+            writeMath(a + " + " + b + " = " + (a+b));
         }
         else if (closestDirection == "left")
         {
@@ -121,6 +124,9 @@ function stopDrag() {
             var temp = collections.pop();
             var i = collections.indexOf(closestCollection);
             collections[i] = temp;
+            var b = closestCollection.width;
+            var a = selectedCollection.width;
+            writeMath(a + " + " + b + " = " + (a+b));
         }
     }
 

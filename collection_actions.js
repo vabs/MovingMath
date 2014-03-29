@@ -108,25 +108,25 @@ function stopDrag() {
     {
         if (closestDirection == "right")
         {
+            var a = closestCollection.width;
+            var b = selectedCollection.width;
+            writeMath(a + " + " + b + " = " + (a+b));
             closestCollection.width += selectedCollection.width;
             closestCollection.closest = false;
             var temp = collections.pop();
             var i = collections.indexOf(selectedCollection);
             collections[i] = temp;
-            var a = closestCollection.width;
-            var b = selectedCollection.width;
-            writeMath(a + " + " + b + " = " + (a+b));
         }
         else if (closestDirection == "left")
         {
+            var b = closestCollection.width;
+            var a = selectedCollection.width;
+            writeMath(a + " + " + b + " = " + (a+b));
             selectedCollection.width += closestCollection.width;
             closestCollection.closest = false;
             var temp = collections.pop();
             var i = collections.indexOf(closestCollection);
             collections[i] = temp;
-            var b = closestCollection.width;
-            var a = selectedCollection.width;
-            writeMath(a + " + " + b + " = " + (a+b));
         }
     }
 

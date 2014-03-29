@@ -133,7 +133,7 @@
           var canvasPosition = canvasFromLeap(g.position, interactionBox);
           makeCollectionAt(canvasPosition);
         }
-        else if (g.type == "circle" && g.state == "stop") {
+        else if (g.type == "circle" && g.state == "stop" && g.duration < 2000) {
           var canvasPosition = canvasFromLeap(g.center, interactionBox);
           rotateCollectionAt(canvasPosition);
         }

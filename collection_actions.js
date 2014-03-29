@@ -66,19 +66,28 @@ function updateDrag(position)
 
     var nearest = null;
     var nearestDist = Infinity;
+    var nearestDirection = null;
     for (var i = 0; i < collections.length; i++)
     {
         var c = collections[i];
         if (selectedCollection.height == c.height)
         {
-            var xdist = selectedCollection.left() - c.right();
+            var xdist = Math.abs(selectedCollection.left() - c.right());
             var ydist = Math.abs(selectedCollection.top() - c.top());
-            if (xdist > -10 && xdist < 15 && ydist < 30)
+            if (xdist < 15 && ydist < 30 && xdist < nearestDist)
             {
                 nearest = c;
                 nearestDist = xdist;
-                break;
+                nearestDirection = "right";
             }
+            var xdist = Math.abs(c.left() - selectedCollection.right());
+            if (xdist < 15 && ydist < 30 && xdist < nearestDist)
+            {
+                nearest = c;
+                nearestDist = xdist;
+                nearestDirection = "left";
+            }
+            
         }
     }
     if (nearest != closestCollection)
@@ -86,6 +95,7 @@ function updateDrag(position)
         if (closestCollection)
             closestCollection.closest = false;
         closestCollection = nearest;
+        closestDirection = nearestDirection;
         if (closestCollection)
             closestCollection.closest = true;
     } 
@@ -96,11 +106,22 @@ function stopDrag() {
     selectedCollection.unselect();
     if (closestCollection)
     {
-        closestCollection.width += selectedCollection.width;
-        closestCollection.closest = false;
-        var temp = collections.pop();
-        var i = collections.indexOf(selectedCollection);
-        collections[i] = temp;
+        if (closestDirection == "right")
+        {
+            closestCollection.width += selectedCollection.width;
+            closestCollection.closest = false;
+            var temp = collections.pop();
+            var i = collections.indexOf(selectedCollection);
+            collections[i] = temp;
+        }
+        else if (closestDirection == "left")
+        {
+            selectedCollection.width += closestCollection.width;
+            closestCollection.closest = false;
+            var temp = collections.pop();
+            var i = collections.indexOf(closestCollection);
+            collections[i] = temp;
+        }
     }
 
     dragging = false;

@@ -53,7 +53,7 @@ function Collection (data) {
     if (this.closest)
     {
         //context.strokeStyle = "#33ccff";
-        context.strokeStyle = "#ff0000";
+        context.strokeStyle = "#33ccff";
     }
     else
     {

@@ -76,6 +76,22 @@ function Collection (data) {
             context.stroke();
         }
     }
+
+    //  Write the numbers around the collection
+    context.fillStyle = "#000000";
+
+    // Value at center
+    context.font = "30px Arial";
+    var center = this.center();
+    context.fillText(this.width * this.height, center[0], center[1]);
+
+    // Numbers around edges
+    // Works only adjusting temp since temp is drawn last
+    context.font = "20px Arial";
+    if (! (this.temp && closestDirection == "bottom"))
+      context.fillText(this.width, center[0], this.top() - 20);
+    if (! (this.temp && closestDirection == "right"))
+      context.fillText(this.height, this.left() - 20, center[1]);
   }
 
   this.select = function () {
@@ -100,6 +116,10 @@ function Collection (data) {
   this.bottom = function () 
   {
       return this.position[1] + this.height*this.boxSize;
+  }
+  this.center = function ()
+  { 
+      return [(this.left() + this.right()) / 2, (this.top() + this.bottom()) / 2];
   }
 }
 

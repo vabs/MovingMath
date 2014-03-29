@@ -102,7 +102,7 @@ function Collection (data) {
   }
   this.bottom = function () 
   {
-      return this.position + this.height*this.boxSize;
+      return this.position[1] + this.height*this.boxSize;
   }
 }
 

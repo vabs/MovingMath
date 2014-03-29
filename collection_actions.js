@@ -70,6 +70,7 @@ function updateDrag(position)
     for (var i = 0; i < collections.length; i++)
     {
         var c = collections[i];
+        // left-right
         if (selectedCollection.height == c.height)
         {
             var xdist = Math.abs(selectedCollection.left() - c.right());
@@ -86,6 +87,25 @@ function updateDrag(position)
                 nearest = c;
                 nearestDist = xdist;
                 nearestDirection = "left";
+            }
+        }
+        // top-bottom
+        if (selectedCollection.width == c.width)
+        {
+            var xdist = Math.abs(selectedCollection.left() - c.left());
+            var ydist = Math.abs(selectedCollection.bottom() - c.top());
+            if (xdist < 30 && ydist < 15 && ydist < nearestDist)
+            {
+                nearest = c;
+                nearestDist = ydist;
+                nearestDirection = "top";
+            }
+            var ydist = Math.abs(c.bottom() - selectedCollection.top());
+            if (xdist < 30 && ydist < 15 && ydist < nearestDist)
+            {
+                nearest = c;
+                nearestDist = ydist;
+                nearestDirection = "bottom";
             }
             
         }
@@ -128,6 +148,29 @@ function stopDrag() {
             var i = collections.indexOf(closestCollection);
             collections[i] = temp;
         }
+        if (closestDirection == "bottom")
+        {
+            var a = closestCollection.width;
+            var b = selectedCollection.width;
+            writeMath(a + " + " + b + " = " + (a+b));
+            closestCollection.height += selectedCollection.height;
+            closestCollection.closest = false;
+            var temp = collections.pop();
+            var i = collections.indexOf(selectedCollection);
+            collections[i] = temp;
+        }
+        else if (closestDirection == "top")
+        {
+            var b = closestCollection.width;
+            var a = selectedCollection.width;
+            writeMath(a + " + " + b + " = " + (a+b));
+            selectedCollection.height += closestCollection.height;
+            closestCollection.closest = false;
+            var temp = collections.pop();
+            var i = collections.indexOf(closestCollection);
+            collections[i] = temp;
+        }
+        
     }
 
     dragging = false;

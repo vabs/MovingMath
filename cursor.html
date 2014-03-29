@@ -115,18 +115,24 @@
     var processGestures = function(frame) {
       var interactionBox = frame.interactionBox;
       var numberOfGestures = frame.gestures.length;
+      function isFromMain() {
+        for (var j = 0; j < g.pointableIds.length; j++) {
+          if (g.pointableIds[j] == pointable_id)
+            return true;
+        }
+        return false;
+      }
+
       for (var i = 0; i < numberOfGestures; i++) {
         var g = frame.gestures[i];
-        if (g.type == "screenTap") {
-          for (var j = 0; j < g.pointableIds.length; j++) {
-            if (g.pointableIds[j] == pointable_id) {
-              //boxes.push(interactionBox.normalizePoint(g.position));
-              // TODO Would like to click at center of box to create
-              var canvasPosition = canvasFromLeap(g.position, interactionBox);
-              makeCollectionAt(canvasPosition);
-            }
-          }
-        }
+        if (! isFromMain(g))
+          continue;
+        var canvasPosition = canvasFromLeap(g.position, interactionBox);
+        // TODO Would like to click at center of box to create
+        if (g.type == "screenTap")
+          makeCollectionAt(canvasPosition);
+        else if (g.type == "circle")
+          rotateCollectionAt(canvasPosition);
       }
     }
 

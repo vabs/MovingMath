@@ -9,6 +9,15 @@ function makeCollectionAt(canvasPosition) {
   collections.push(col);
 }
 
+function rotateCollectionAt(canvasPosition) {
+  var c = collectionAt(canvasPosition);
+  if (c) {
+    var temp = c.width;
+    c.width = c.height;
+    c.height = temp;
+  }
+}
+
 // returns the collection at the given canvas position, if there is one
 function collectionAt(position)
 {

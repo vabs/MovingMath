@@ -150,7 +150,10 @@
           if (distance > 100 && distance < 150)
             numFingers++;
         }
-        startDrag(position, numFingers);
+        if (numFingers == 0)
+          startDrag(position);
+        else
+          startMultiply(position);
       }
       else if (p && p.valid && moving() && p.touchDistance <= 0)
         updateDrag(position);

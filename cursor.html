@@ -88,6 +88,7 @@
       // Draw each finger with a circle
       for (var i = 0; i < numberOfPointables; i++) {
         var p = frame.pointables[i];
+        if (p.timeVisible < 0.5) continue;
         var canvasPosition = canvasFromLeap(p.tipPosition, interactionBox);
 
         var canvasX = canvasPosition[0];
@@ -153,6 +154,7 @@
         for (var i = 0; i < frame.pointables.length; i++) {
           var q = frame.pointables[i];
           if (p.id == q.id) continue;
+          if (q.timeVisible < 0.5) continue;
           var pposition = flatten(position);
           var qposition = flatten(canvasFromLeap(q.tipPosition, iBox));
           var distance = 0; //vec2.distance(pposition, qposition);

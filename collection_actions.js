@@ -148,8 +148,6 @@ function stopDrag() {
         }
         if (closestDirection == "bottom")
         {
-            var a = closestCollection.width;
-            var b = selectedCollection.width;
             writeMath(a + " + " + b + " = " + (a+b));
             closestCollection.height += selectedCollection.height;
             closestCollection.closest = false;
@@ -159,9 +157,7 @@ function stopDrag() {
         }
         else if (closestDirection == "top")
         {
-            var b = closestCollection.width;
-            var a = selectedCollection.width;
-            writeMath(a + " + " + b + " = " + (a+b));
+            writeMath(b + " + " + a + " = " + (a+b));
             selectedCollection.height += closestCollection.height;
             closestCollection.closest = false;
             var temp = collections.pop();

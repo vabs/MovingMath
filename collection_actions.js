@@ -12,6 +12,14 @@ function makeCollectionAt(canvasPosition) {
 function rotateCollectionAt(canvasPosition) {
   var c = collectionAt(canvasPosition);
   if (c) {
+    var center = [(c.left() + c.right()) / 2, (c.top() + c.bottom()) / 2];
+    var xsize = c.right() - center[0];
+    var ysize = c.bottom() - center[1];
+
+    //  actually update the collection
+    c.position[0] = center[0] - ysize;
+    c.position[1] = center[1] - xsize;
+
     var temp = c.width;
     c.width = c.height;
     c.height = temp;

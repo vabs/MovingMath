@@ -115,7 +115,7 @@
     var processGestures = function(frame) {
       var interactionBox = frame.interactionBox;
       var numberOfGestures = frame.gestures.length;
-      function isFromMain() {
+      function isFromMain(g) {
         for (var j = 0; j < g.pointableIds.length; j++) {
           if (g.pointableIds[j] == pointable_id)
             return true;
@@ -127,12 +127,15 @@
         var g = frame.gestures[i];
         if (! isFromMain(g))
           continue;
-        var canvasPosition = canvasFromLeap(g.position, interactionBox);
         // TODO Would like to click at center of box to create
-        if (g.type == "screenTap")
+        if (g.type == "screenTap") {
+          var canvasPosition = canvasFromLeap(g.position, interactionBox);
           makeCollectionAt(canvasPosition);
-        else if (g.type == "circle")
+        }
+        else if (g.type == "circle" && g.state == "stop") {
+          var canvasPosition = canvasFromLeap(g.center, interactionBox);
           rotateCollectionAt(canvasPosition);
+        }
       }
     }
 

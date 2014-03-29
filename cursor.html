@@ -55,6 +55,11 @@
       return [pos[0], pos[1]];
     }
 
+    var distance = function(pos1, pos2)
+    {
+        return Leap.vec3.distance([pos1[0], pos1[1], 0], [pos2[0], pos2[1], 0]);
+    }
+
     var draw = function() {
       drawCollections(context);
 
@@ -144,10 +149,9 @@
         for (var i = 0; i < frame.pointables.length; i++) {
           var q = frame.pointables[i];
           if (p.id == q.id) continue;
-          var pposition = flatten(position);
-          var qposition = flatten(canvasFromLeap(q.tipPosition, iBox));
-          var distance = 0; //vec2.distance(pposition, qposition);
-          if (distance > 100 && distance < 150)
+          if (q.timeVisible < 0.5) continue;
+          var d = distance(p.tipPosition, q.tipPosition);
+          if (d > 20 && d < 50)
             numFingers++;
         }
         if (numFingers == 0)

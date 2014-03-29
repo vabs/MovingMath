@@ -28,12 +28,13 @@ function Collection (data) {
    */
   this.boxSize = 40;//data.boxSize;
 
-  this.height = 2;
+  this.height = 1;
 
-  this.width = 2;
+  this.width = 1;
 
   this.selected = false;
   this.closest = false;
+  this.temp = false;
 
   /**
    * The boxes grouped together in this collection.
@@ -51,23 +52,19 @@ function Collection (data) {
 
   this.draw = function (context) {
     if (this.closest)
-    {
-        //context.strokeStyle = "#33ccff";
         context.strokeStyle = "#33ccff";
-    }
     else
-    {
         context.strokeStyle = "#000000";
-    }
 
     if (this.selected)
-    {
         context.fillStyle = "#33ccff";
-    }
     else
-    {
         context.fillStyle = "#660099"
-    }
+
+    if (this.temp)
+        context.fillStyle = "#00ff00";
+    //    context.fillStyle = "rgba(51, 204, 255, .5)"
+
     for (var i = 0; i < this.width; i++)
     {
         for (var j = 0; j < this.height; j++)

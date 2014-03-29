@@ -7,6 +7,7 @@ function makeCollectionAt(canvasPosition) {
     position: canvasPosition
   });
   collections.push(col);
+  return col;
 }
 
 // returns the collection at the given canvas position, if there is one
@@ -34,6 +35,7 @@ var closestCollection = null; // closest to the one we're dragging
 var closestDirection = null;
 var multiplying = false;
 var selectedCollection = null;
+var tempCollection = null;
 
 function moving()
 {
@@ -43,6 +45,8 @@ function moving()
 
 function startDrag(canvasPosition)
 {
+    if (multiplying)
+        return;
     var c = collectionAt(canvasPosition);
     if (c && c != selectedCollection)
     {
@@ -61,6 +65,16 @@ function startDrag(canvasPosition)
 
 function updateDrag(position)
 {
+    console.log("updating..." + dragging + "  " + multiplying);
+    if (dragging)
+        updateAddition(position);
+    else if (multiplying)
+        updateMultiplication(position);
+}
+
+function updateAddition(position)
+{
+    console.log("in addition :(((");
     var dif = selectedCollection.boxSize / 2;
     selectedCollection.position = [position[0] - dif, position[1] - dif, position[2]];
 
@@ -122,7 +136,16 @@ function updateDrag(position)
 
 }
 
-function stopDrag() {
+function stopDrag() 
+{
+    if (dragging)
+        endAddition();
+    else if (multiplying)
+        endMultiplication();
+}
+
+function endAddition()
+{
     selectedCollection.unselect();
     if (closestCollection)
     {
@@ -158,6 +181,9 @@ function stopDrag() {
         else if (closestDirection == "top")
         {
             writeMath(b + " + " + a + " = " + (a+b));
+            var b = closestCollection.width;
+            var a = selectedCollection.width;
+            writeMath(a + " + " + b + " = " + (a+b));
             selectedCollection.height += closestCollection.height;
             closestCollection.closest = false;
             var temp = collections.pop();
@@ -173,7 +199,108 @@ function stopDrag() {
   // Check for merging
 }
 
-function startMultiply() {}
+function startMultiply(position)
+{
+    if (dragging)
+        return;
+    console.log("starting to multiply");
+    var c = collectionAt(position);
+    if (c && c != selectedCollection)
+    {
+        console.log("and actually chose a collection!");
+        if (selectedCollection)
+            selectedCollection.unselect();
+        c.select();
+        console.log(c);
+        multiplying = true;
+        selectedCollection = c;
+        // move to the end of the list, for drawing purposes
+        var i = collections.indexOf(selectedCollection);
+        arraySwap(collections, i, collections.length - 1);
+
+
+        tempCollection = makeCollectionAt(selectedCollection.position.slice(0));
+        tempCollection.height = 0;
+        tempCollection.width = 0;
+        tempCollection.temp = true;
+    }
+}
+
+
+function updateMultiplication(position)
+{
+    console.log("updating multipliction");
+    console.log(multiplying);
+    var left = selectedCollection.left() - position[0];
+    var right = position[0] - selectedCollection.right();
+    var top = selectedCollection.top() - position[1];
+    var bottom = position[1] - selectedCollection.bottom();
+
+    console.log(left + " " + right + " " + top + " " + bottom);
+
+    if (right > 0 && right > top && right > bottom)
+    {
+        console.log("to the right!");
+        closestDirection = "right";
+        tempCollection.position = selectedCollection.position.slice(0);
+        tempCollection.position[0] = selectedCollection.right();
+        tempCollection.height = selectedCollection.height;
+        tempCollection.width = 2;
+    }
+    else if (left > 0 && left > top && left > bottom)
+    {
+        closestDirection = "left";
+        console.log("to the left!");    
+        tempCollection.position = selectedCollection.position.slice(0);
+        tempCollection.position[0] -= 80;
+        tempCollection.height = selectedCollection.height;
+        tempCollection.width = 2;
+    }
+    else if (top > 0 && top > right && top > left)
+    {
+        console.log("to the top!");
+        closestDirection = "top";
+        tempCollection.position = selectedCollection.position.slice(0);
+        tempCollection.position[1] -= 80;
+        tempCollection.width = selectedCollection.width;
+        tempCollection.height = 2;
+    }
+    else if (bottom > 0 && bottom > right && bottom > left)
+    {
+        console.log("to the bottom!");    
+        closestDirection = "bottom";
+        tempCollection.position = selectedCollection.position.slice(0);
+        tempCollection.position[1] = selectedCollection.bottom();
+        tempCollection.width = selectedCollection.width;
+        tempCollection.height = 2;
+    }
+}
+
+function endMultiplication()
+{
+    multiplying = false;
+    selectedCollection.unselect();
+    t = collections.indexOf(tempCollection);
+    collections[t] = collections[collections.length - 1];
+    collections.pop();
+    if (closestDirection == "right")
+        selectedCollection.width += tempCollection.width;
+    else if (closestDirection == "bottom")
+        selectedCollection.height += tempCollection.height;
+    else if (closestDirection == "left")
+    {
+        selectedCollection.width += tempCollection.width;
+        selectedCollection.position[0] = tempCollection.position[0];
+    }
+    else if (closestDirection == "top")
+    {
+        selectedCollection.height += tempCollection.height;
+        selectedCollection.position[1] = tempCollection.position[1];
+    }
+
+    tempCollection = null;
+    selectedCollection = null;
+}
 
 function drawCollections(context) {
   for (var i = 0; i < collections.length; i++)

@@ -106,10 +106,10 @@ function stopDrag() {
     selectedCollection.unselect();
     if (closestCollection)
     {
+        var a = closestCollection.width * closestCollection.height;
+        var b = selectedCollection.width * selectedCollection.height;
         if (closestDirection == "right")
         {
-            var a = closestCollection.width;
-            var b = selectedCollection.width;
             writeMath(a + " + " + b + " = " + (a+b));
             closestCollection.width += selectedCollection.width;
             closestCollection.closest = false;
@@ -119,9 +119,7 @@ function stopDrag() {
         }
         else if (closestDirection == "left")
         {
-            var b = closestCollection.width;
-            var a = selectedCollection.width;
-            writeMath(a + " + " + b + " = " + (a+b));
+            writeMath(b + " + " + a + " = " + (a+b));
             selectedCollection.width += closestCollection.width;
             closestCollection.closest = false;
             var temp = collections.pop();

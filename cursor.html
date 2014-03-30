@@ -34,6 +34,8 @@
     var width = canvas.width;
     var height = canvas.height;
 
+    var prevFrame = null;
+
     var controller = new Leap.Controller({
       enableGestures: true,
       // frameEventName: 'animationFrame'
@@ -58,6 +60,13 @@
     var distance = function(pos1, pos2)
     {
         return Leap.vec3.distance([pos1[0], pos1[1], 0], [pos2[0], pos2[1], 0]);
+    }
+
+    var rescale = function(x)
+    {
+        context.scale(x,x);
+        width /= x;
+        height /= x;
     }
 
     var draw = function() {
@@ -184,6 +193,13 @@
 
       //  Cursor is at touching depth but not doing anything
       smearing = p.touchDistance <= 0 && !moving();
+
+      // when there are no fingers, use hand to zoom
+      if (frame.hands.length == 2 && prevFrame)
+      {
+          if (frame.hands[0].fingers.length > 2 && frame.hands[1].fingers.length > 2)
+            rescale(frame.scaleFactor(prevFrame))
+      }
     }
 
     math = "";
@@ -216,6 +232,14 @@
       else if (e.keyCode == 56 && e.shiftKey) {
         typedMath += " * ";
       }
+      else if (e.keyCode == 38)
+      {
+          rescale(1.1);
+      }
+      else if (e.keyCode == 40)
+      {
+          rescale(.9);
+      }
       showTypedMath = true;
     }
 
@@ -235,6 +259,7 @@
       doActions(frame);
       draw();
       drawFingers(frame);
+      prevFrame = frame;
     });
     controller.connect();
 

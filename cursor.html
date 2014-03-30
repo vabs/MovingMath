@@ -34,6 +34,11 @@
     var width = canvas.width;
     var height = canvas.height;
 
+    context.translate(width/2, height/2);
+    context.scale(.8, .8);
+
+    var scale = .8;
+
     var prevFrame = null;
 
     var controller = new Leap.Controller({
@@ -45,7 +50,7 @@
 
     var normalFromLeap = function(pos, iBox) {
       var npos = iBox.normalizePoint(pos, true);
-      return [npos[0], 1 - npos[1], npos[2]];
+      return [2*npos[0]-1, 1 - 2*npos[1], 2*npos[2]-1];
     }
     var canvasFromNormal = function(pos) {
       return [pos[0] * width, pos[1] * height, pos[2]];
@@ -67,6 +72,7 @@
         context.scale(x,x);
         width /= x;
         height /= x;
+        scale *= x;
     }
 
     var draw = function() {
@@ -101,6 +107,7 @@
 
       context.fillStyle = "#000000"
       context.strokeStyle = "#000000"
+      context.lineWidth = 1/scale;
       // Draw each finger with a circle
       for (var i = 0; i < numberOfPointables; i++) {
         var p = frame.pointables[i];
@@ -113,7 +120,7 @@
         var radiusScale = p.touchDistance;
         if (radiusScale < 0)
           radiusScale = 0;
-        var radius = 25 * (radiusScale + 0.5);
+        var radius = 25 * (radiusScale + 0.4) / scale;
 
         context.beginPath();
         if (p.id == pointable_id) { // Primary finger gets bigger circle
@@ -123,10 +130,11 @@
           else
             context.fill();
         } else {
-          context.arc(canvasX, canvasY, 5, 0, 2 * Math.PI);
+          context.arc(canvasX, canvasY, 5/scale, 0, 2 * Math.PI);
           context.stroke();
         }
       }
+      context.lineWidth = 1;
     }
 
     function isFromMain(g) {
@@ -179,7 +187,7 @@
           if (p.id == q.id) continue;
           if (q.timeVisible < 0.5) continue;
           var d = distance(p.tipPosition, q.tipPosition);
-          if (d > 20 && d < 50)
+          if (d > 10 && d < 50)
             numFingers++;
         }
         if (numFingers == 0)
@@ -250,7 +258,7 @@
       // Cursor.leapToCursor(frame);
 
       // Clears the canvas so frames don't build on each other.
-      context.clearRect(0, 0, width, height);
+      context.clearRect(-width, -height, 2*width, 2*height);
 
       if (!frame.valid)
         return;

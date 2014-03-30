@@ -74,7 +74,6 @@ function Collection (data) {
             boxY = this.position[1] + this.boxSize * (j);
             context.fillRect(boxX, boxY, this.boxSize, this.boxSize);
             context.strokeRect(boxX, boxY, this.boxSize, this.boxSize);
-            context.stroke();
         }
     }
 

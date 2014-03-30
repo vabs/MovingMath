@@ -292,7 +292,8 @@
         return;
 
       findPrimaryFinger(frame);
-      processGestures(frame);
+      if (!moving())
+        processGestures(frame);
       doActions(frame);
       draw();
       drawFingers(frame);

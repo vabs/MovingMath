@@ -83,14 +83,16 @@ function Collection (data) {
     // Value at center
     context.font = "30px Arial";
     var center = this.center();
+    if (this.temp && (this.width == 0 || this.height == 0))
+      return;
     context.fillText(this.width * this.height, center[0], center[1]);
 
     // Numbers around edges
     // Works only adjusting temp since temp is drawn last
     context.font = "20px Arial";
-    if (! ((this.temp && closestDirection == "bottom") || (this.selected && closestDirection == "top"))
+    if (! ((this.temp && closestDirection == "bottom") || (this.selected && closestDirection == "top")))
       context.fillText(this.width, center[0], this.top() - 20);
-    if (! ((this.temp && closestDirection == "right") || (this.selected && closestDirection == "top"))
+    if (! ((this.temp && closestDirection == "right") || (this.selected && closestDirection == "left")))
       context.fillText(this.height, this.left() - 20, center[1]);
   }
 

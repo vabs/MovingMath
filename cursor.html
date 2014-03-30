@@ -75,6 +75,23 @@
         scale *= x;
     }
 
+    var reset = function() {
+      rescale(1.0 / scale);
+
+      collections = [];
+      selectedCollections = null;
+      temporaryCollection = null;
+
+      smearing = false;
+      dragging = false;
+      closestCollection = null; // closest to the one we're dragging
+      closestDirection = null;
+      multiplying = false;
+      selectedCollection = null;
+      selectedPosition = null; // where on the collection we tapped
+      tempCollection = null;
+    }
+
     var draw = function() {
       drawCollections(context);
 
@@ -158,6 +175,9 @@
         if (g.type == "screenTap") {
           var canvasPosition = canvasFromLeap(g.position, interactionBox);
           makeCollectionAt(canvasPosition);
+        }
+        else if (g.type == "swipe" && Leap.vec3.distance(g.position, g.startPosition) > 500) {
+          reset();
         }
         else if (g.type == "circle" && g.state == "stop") {
           if (g.duration / 1000000.0 < 1) {

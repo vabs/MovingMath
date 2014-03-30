@@ -52,6 +52,14 @@ function Collection (data) {
     this.boxes = [new Box({x: 0, y: 0})];
   }*/
 
+  boxStyle = "#CC66FF";
+  /*var img = document.createElement("img");
+  img.src = "puppy.png";
+  img.onload = function () 
+  {
+      boxStyle = context.createPattern(img, "no-repeat");
+  }*/
+
   this.draw = function (context) {
     if (this.closest)
         context.strokeStyle = "#33ccff";
@@ -61,7 +69,8 @@ function Collection (data) {
     if (this.selected) // blue
         context.fillStyle = "#33ccff";
     else //purple
-        context.fillStyle = "#CC66FF"
+        context.fillStyle = boxStyle; //context.createPattern(img, "no-repeat")
+        //context.fillStyle = "#CC66FF"
         //context.fillStyle = "#660099"
 
     if (this.temp)

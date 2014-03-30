@@ -80,11 +80,12 @@
 
       // Write the math
       context.fillStyle = "#000000";
-      context.font = "100px Arial";
+      var fontSize = 100 / scale;
+      context.font = fontSize + "px Arial";
       context.textAlign = "center";
       context.textBaseline = "middle";
       var text = showTypedMath ? typedMath : math;
-      context.fillText(text, width / 2, height / 9);
+      context.fillText(text, 0, -8 * height / 9);
     }
 
     var findPrimaryFinger = function(frame) {

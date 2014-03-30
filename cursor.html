@@ -146,6 +146,7 @@
       }
     }
 
+    var smearing = false;
     var doActions = function(frame) {
       var p = frame.pointable(pointable_id);
       if (!p.valid)
@@ -153,9 +154,12 @@
 
       var iBox = frame.interactionBox;
       var position = canvasFromLeap(p.tipPosition, iBox);
-      var isMoving = moving();
 
-      if (p && p.valid && !isMoving && p.touchDistance <= 0) {
+      //  To start an action, must be
+      //  - not currently moving something
+      //  - not smearing in the last frame
+      //  - at touching distance
+      if (p && p.valid && !moving() && !smearing && p.touchDistance <= 0) {
         var numFingers = 0;
         for (var i = 0; i < frame.pointables.length; i++) {
           var q = frame.pointables[i];
@@ -174,6 +178,9 @@
         updateDrag(position);
       else if (p && p.valid && moving() && p.touchDistance > 0)
         stopDrag(position);
+
+      //  Cursor is at touching depth but not doing anything
+      smearing = p.touchDistance <= 0 && !moving();
     }
 
     math = "";

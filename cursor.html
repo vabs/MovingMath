@@ -147,6 +147,10 @@
             rotateCollectionAt(canvasPosition);
           }
         }
+        else if (g.type == "keyTap") {
+          var canvasPosition = canvasFromLeap(g.position, interactionBox);
+          splitCollectionAt(canvasPosition);
+        }
       }
     }
 

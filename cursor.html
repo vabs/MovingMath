@@ -102,7 +102,7 @@
       context.textAlign = "center";
       context.textBaseline = "middle";
       var text = showTypedMath ? typedMath : math;
-      context.fillText(text, 0, -8 * height / 9);
+      context.fillText(text, 0, -height * 0.8);
     }
 
     var findPrimaryFinger = function(frame) {
@@ -176,7 +176,7 @@
           var canvasPosition = canvasFromLeap(g.position, interactionBox);
           makeCollectionAt(canvasPosition);
         }
-        else if (g.type == "swipe" && Leap.vec3.distance(g.position, g.startPosition) > 500) {
+        else if (g.type == "swipe" && Leap.vec3.distance(g.position, g.startPosition) > 300) {
           reset();
         }
         else if (g.type == "circle" && g.state == "stop") {

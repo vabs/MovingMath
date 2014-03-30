@@ -288,10 +288,14 @@ function updateMultiplication(position)
         tempCollection.height = height * selectedCollection.height;
         scale = height;
     }
-    else
-      scale = 1;
+    else {
+      tempCollection.width = 0;
+      tempCollection.height = 0;
+      scale = 0;
+    }
+    scale += 1;
     var base = selectedCollection.width * selectedCollection.height;
-    writeMath(base + " * " + scale + " = " + (base*scale));
+    writeMath(base + " x " + scale + " = " + (base*scale));
 }
 
 function endMultiplication()

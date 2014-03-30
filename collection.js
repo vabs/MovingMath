@@ -88,9 +88,9 @@ function Collection (data) {
     // Numbers around edges
     // Works only adjusting temp since temp is drawn last
     context.font = "20px Arial";
-    if (! (this.temp && closestDirection == "bottom"))
+    if (! ((this.temp && closestDirection == "bottom") || (this.selected && closestDirection == "top"))
       context.fillText(this.width, center[0], this.top() - 20);
-    if (! (this.temp && closestDirection == "right"))
+    if (! ((this.temp && closestDirection == "right") || (this.selected && closestDirection == "top"))
       context.fillText(this.height, this.left() - 20, center[1]);
   }
 

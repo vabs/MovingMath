@@ -1,3 +1,5 @@
+var boxSize = 40;
+
 function Collection (data) {
 
   /**
@@ -26,7 +28,7 @@ function Collection (data) {
    * @member boxSize
    * @type number
    */
-  this.boxSize = 40;//data.boxSize;
+  this.boxSize = boxSize;
 
   this.height = 1;
 

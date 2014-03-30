@@ -27,6 +27,19 @@ function rotateCollectionAt(position) {
   }
 }
 
+function splitCollectionAt(position) {
+  var abovePos = [position[0], position[1] - boxSize, position[3]];
+  var c = collectionAt(position) || collectionAt(abovePos);
+  if (c) {
+    var index = Math.round((position[0] - c.position[0]) / c.boxSize);
+    if (index <= 0 || index >= c.width) return;
+    var cc = makeCollectionAt([c.position[0] + (index + 1) * c.boxSize, c.position[1], c.position[2]]);
+    cc.width = c.width - index;
+    cc.height = c.height;
+    c.width = index;
+  }
+}
+
 // returns the collection at the given canvas position, if there is one
 function collectionAt(position)
 {

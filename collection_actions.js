@@ -36,6 +36,7 @@ function splitCollectionAt(position) {
     var cc = makeCollectionAt([c.position[0] + (index + 1) * c.boxSize, c.position[1], c.position[2]]);
     cc.width = c.width - index;
     cc.height = c.height;
+    writeMath(c.width + " - " + index + " = " + (c.width - index));
     c.width = index;
   }
 }

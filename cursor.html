@@ -95,6 +95,9 @@
       selectedCollection = null;
       selectedPosition = null; // where on the collection we tapped
       tempCollection = null;
+
+      math = "";
+      typedMath = "";
     }
 
     var draw = function() {
@@ -282,7 +285,7 @@
       showTypedMath = true;
     }
 
-    window.onkeydown = readKeys;
+    // window.onkeydown = readKeys;
 
     controller.on( 'frame' , function(frame){
       // Cursor.leapToCursor(frame);

@@ -3,18 +3,31 @@
   <style>
           #canvas{
                   width:        100%;
-                  height:        95%;
+                  height:        93%;
                   border-style: solid;
                   border-color: black;
                   border-width: medium;
           }
-          
+
+          #bottomText {
+            margin-left: auto;
+            margin-right: 0;
+          }
+          .right {
+            display: block;
+            margin: 0px auto;
+            float: right;
+            bottom: 0;
+          }
   </style>
-        
 </head>
 <body>
 
   <canvas id="canvas"></canvas>
+  <div id="bottomText">
+    <span><font face="brush script mt" size="6">Moving Math</font></span>
+    <span class="right">Chhaya Werner, Natalie Weires, Wenley Tong</span>
+  </div>
  
   <script src="http://js.leapmotion.com/0.2.0/leap.min.js"></script>
   <script src="./collection.js"></script>

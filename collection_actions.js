@@ -337,6 +337,10 @@ function endMultiplication()
         selectedCollection.height += tempCollection.height;
         selectedCollection.position[1] = tempCollection.position[1];
     }
+    else
+    {
+        writeMath("");
+    }
 
     tempCollection = null;
     selectedCollection = null;

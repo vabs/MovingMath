@@ -180,7 +180,7 @@
           reset();
         }
         else if (g.type == "circle" && g.state == "stop") {
-          if (g.duration / 1000000.0 < 1) {
+          if (g.duration / 1000000.0 < 1 && g.radius > 25) {
             var canvasPosition = canvasFromLeap(g.center, interactionBox);
             rotateCollectionAt(canvasPosition);
           }

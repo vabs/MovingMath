@@ -62,8 +62,8 @@ function Collection (data) {
         context.fillStyle = "#660099"
 
     if (this.temp)
-        context.fillStyle = "#00ff00";
-    //    context.fillStyle = "rgba(51, 204, 255, .5)"
+        //context.fillStyle = "#00ff00";
+        context.fillStyle = "rgba(51, 204, 255, .5)"
 
     for (var i = 0; i < this.width; i++)
     {

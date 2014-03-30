@@ -68,7 +68,8 @@
       context.font = "100px Arial";
       context.textAlign = "center";
       context.textBaseline = "middle";
-      context.fillText(math, width / 2, height / 9);
+      var text = showTypedMath ? typedMath : math;
+      context.fillText(text, width / 2, height / 9);
     }
 
     var findPrimaryFinger = function(frame) {
@@ -177,9 +178,39 @@
     }
 
     math = "";
+    typedMath = "";
+    showTypedMath = true;
     var writeMath = function(string) {
+      showTypedMath = false;
       math = string;
     }
+
+    var readKeys = function(e) {
+      console.log("reading key");
+      if (e.keyCode == 13) {
+        console.log("Would execute math: " + typedMath);
+        // Lock down Leap
+        // Start animation
+        typedMath = "";
+      }
+      else if (e.keyCode >= 48 && e.keyCode <= 57 && !e.shiftKey) {
+        // Add a digit typed
+        var newChar = String.fromCharCode(e.keyCode);
+        typedMath += newChar;
+      }
+      else if (e.keyCode == 187) {
+        if (e.shiftKey)
+          typedMath += " + ";
+        else
+          typedMath += " - ";
+      }
+      else if (e.keyCode == 56 && e.shiftKey) {
+        typedMath += " * ";
+      }
+      showTypedMath = true;
+    }
+
+    window.onkeydown = readKeys;
 
     controller.on( 'frame' , function(frame){
       // Cursor.leapToCursor(frame);

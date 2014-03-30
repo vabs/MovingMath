@@ -3,7 +3,7 @@
   <style>
           #canvas{
                   width:        100%;
-                  height:        93%;
+                  height:        90%;
                   border-style: solid;
                   border-color: black;
                   border-width: medium;
@@ -13,10 +13,13 @@
             margin-left: auto;
             margin-right: 0;
           }
-          .right {
+          #names {
             display: block;
-            margin: 0px auto;
+            height: 100%;
             float: right;
+          }
+          .right {
+            margin: auto 0px 0px auto;
             bottom: 0;
           }
   </style>
@@ -25,8 +28,11 @@
 
   <canvas id="canvas"></canvas>
   <div id="bottomText">
-    <span><font face="brush script mt" size="6">Moving Math</font></span>
-    <span class="right">Chhaya Werner, Natalie Weires, Wenley Tong</span>
+    <span><font face="brush script mt" size="7">Moving Math</font></span>
+    <div id="names">
+      <br/>
+      <span class="right">Chhaya Werner, Natalie Weires, Wenley Tong</span>
+    </div>
   </div>
  
   <script src="http://js.leapmotion.com/0.2.0/leap.min.js"></script>

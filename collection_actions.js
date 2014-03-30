@@ -10,10 +10,10 @@ function makeCollectionAt(canvasPosition) {
   return col;
 }
 
-function rotateCollectionAt(canvasPosition) {
-  var c = collectionAt(canvasPosition);
+function rotateCollectionAt(position) {
+  var c = collectionAt(position);
   if (c) {
-    var center = [(c.left() + c.right()) / 2, (c.top() + c.bottom()) / 2];
+    var center = c.center();
     var xsize = c.right() - center[0];
     var ysize = c.bottom() - center[1];
 
@@ -247,6 +247,7 @@ function updateMultiplication(position)
     var top = selectedCollection.top() - position[1];
     var bottom = position[1] - selectedCollection.bottom();
 
+    var scale;
 
     if (right > 0 && right > top && right > bottom)
     {
@@ -254,8 +255,9 @@ function updateMultiplication(position)
         tempCollection.position = selectedCollection.position.slice(0);
         tempCollection.position[0] = selectedCollection.right();
         tempCollection.height = selectedCollection.height;
-        var width = Math.floor((right/selectedCollection.boxSize)/selectedCollection.width)
-        tempCollection.width = (width + 1) * selectedCollection.width;
+        var width = 1 + Math.floor((right/selectedCollection.boxSize)/selectedCollection.width)
+        tempCollection.width = width * selectedCollection.width;
+        scale = width;
     }
     else if (left > 0 && left > top && left > bottom)
     {
@@ -265,6 +267,7 @@ function updateMultiplication(position)
         var width = 1 + Math.floor((left/selectedCollection.boxSize)/selectedCollection.width)
         tempCollection.width = width * selectedCollection.width;
         tempCollection.position[0] -= tempCollection.width * selectedCollection.boxSize;
+        scale = width;
     }
     else if (top > 0 && top > right && top > left)
     {
@@ -274,6 +277,7 @@ function updateMultiplication(position)
         var height = 1 + Math.floor((top/selectedCollection.boxSize)/selectedCollection.height)
         tempCollection.height = height * selectedCollection.height;
         tempCollection.position[1] -= tempCollection.height * selectedCollection.boxSize;
+        scale = height;
     }
     else if (bottom > 0 && bottom > right && bottom > left)
     {
@@ -283,14 +287,17 @@ function updateMultiplication(position)
         tempCollection.width = selectedCollection.width;
         var height = 1 + Math.floor((bottom/selectedCollection.boxSize)/selectedCollection.height)
         tempCollection.height = height * selectedCollection.height;
+        scale = height;
     }
-    else
-    {
-        closestDirection = null;
-        tempCollection.width = 0;
-        tempCollection.height = 0;
-
+    else {
+      tempCollection.width = 0;
+      tempCollection.height = 0;
+      scale = 0;
+      closestDirection = null;
     }
+    scale += 1;
+    var base = selectedCollection.width * selectedCollection.height;
+    writeMath(base + " x " + scale + " = " + (base*scale));
 }
 
 function endMultiplication()

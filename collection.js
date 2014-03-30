@@ -56,10 +56,11 @@ function Collection (data) {
     else
         context.strokeStyle = "#000000";
 
-    if (this.selected)
+    if (this.selected) // blue
         context.fillStyle = "#33ccff";
-    else
-        context.fillStyle = "#660099"
+    else //purple
+        context.fillStyle = "#CC66FF"
+        //context.fillStyle = "#660099"
 
     if (this.temp)
         //context.fillStyle = "#00ff00";
@@ -78,11 +79,15 @@ function Collection (data) {
     }
 
     //  Write the numbers around the collection
-    context.fillStyle = "#000000";
 
     // Value at center
     context.font = "30px Arial";
     var center = this.center();
+    var w = context.measureText(this.width * this.height).width;
+    //context.fillStyle = "rgba(255, 255, 255, .5)"
+    //context.fillStyle = "rgb(255, 0, 0)"
+    context.fillRect(center[0] - w/2, center[1] - 15, w, 30);
+    context.fillStyle = "#000000";
     context.fillText(this.width * this.height, center[0], center[1]);
 
     // Numbers around edges

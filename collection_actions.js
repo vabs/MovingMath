@@ -52,6 +52,7 @@ var closestCollection = null; // closest to the one we're dragging
 var closestDirection = null;
 var multiplying = false;
 var selectedCollection = null;
+var selectedPosition = null; // where on the collection we tapped
 var tempCollection = null;
 
 function moving()
@@ -60,17 +61,18 @@ function moving()
 }
 
 
-function startDrag(canvasPosition)
+function startDrag(position)
 {
     if (multiplying)
         return;
-    var c = collectionAt(canvasPosition);
+    var c = collectionAt(position);
     if (c && c != selectedCollection)
     {
         if (selectedCollection)
             selectedCollection.unselect();
         c.select();
         selectedCollection = c;
+        selectedPosition = [position[0] - c.position[0], position[1] - c.position[1], position[2]];
         dragging = true;
         // move to the end of the list, for drawing purposes
         var i = collections.indexOf(selectedCollection);
@@ -90,8 +92,7 @@ function updateDrag(position)
 
 function updateAddition(position)
 {
-    var dif = selectedCollection.boxSize / 2;
-    selectedCollection.position = [position[0] - dif, position[1] - dif, position[2]];
+    selectedCollection.position = [position[0] - selectedPosition[0], position[1] - selectedPosition[1], position[2]];
 
     var nearest = null;
     var nearestDist = Infinity;
@@ -205,12 +206,12 @@ function endAddition()
             var i = collections.indexOf(closestCollection);
             collections[i] = temp;
         }
-        
     }
 
     dragging = false;
     selectedCollection = null;
     closestCollection = null;
+    selectedPosition = null;
   // Check for merging
 }
 
@@ -282,6 +283,13 @@ function updateMultiplication(position)
         tempCollection.width = selectedCollection.width;
         var height = 1 + Math.floor((bottom/selectedCollection.boxSize)/selectedCollection.height)
         tempCollection.height = height * selectedCollection.height;
+    }
+    else
+    {
+        closestDirection = null;
+        tempCollection.width = 0;
+        tempCollection.height = 0;
+
     }
 }
 

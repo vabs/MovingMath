@@ -79,6 +79,8 @@
     }
 
     var reset = function() {
+      context.clearRect(-width, -height, 2*width, 2*height);
+
       rescale(1.0 / scale);
 
       collections = [];

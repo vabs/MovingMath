@@ -10,10 +10,10 @@ function makeCollectionAt(canvasPosition) {
   return col;
 }
 
-function rotateCollectionAt(canvasPosition) {
-  var c = collectionAt(canvasPosition);
+function rotateCollectionAt(position) {
+  var c = collectionAt(position);
   if (c) {
-    var center = [(c.left() + c.right()) / 2, (c.top() + c.bottom()) / 2];
+    var center = c.center();
     var xsize = c.right() - center[0];
     var ysize = c.bottom() - center[1];
 

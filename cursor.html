@@ -65,7 +65,8 @@
 
       // Write the math
       context.fillStyle = "#000000";
-      context.font = "100px Arial";
+      var fontSize = 100 / scale;
+      context.font = fontSize + "px Arial";
       context.textAlign = "center";
       context.textBaseline = "middle";
       var text = showTypedMath ? typedMath : math;

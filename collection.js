@@ -86,10 +86,10 @@ function Collection (data) {
     var w = context.measureText(this.width * this.height).width;
     //context.fillStyle = "rgba(255, 255, 255, .5)"
     //context.fillStyle = "rgb(255, 0, 0)"
-    context.fillRect(center[0] - w/2, center[1] - 15, w, 30);
-    context.fillStyle = "#000000";
     if (this.temp && (this.width == 0 || this.height == 0))
       return;
+    context.fillRect(center[0] - w/2, center[1] - 15, w, 30);
+    context.fillStyle = "#000000";
     context.fillText(this.width * this.height, center[0], center[1]);
 
     // Numbers around edges

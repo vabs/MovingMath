@@ -118,14 +118,14 @@ function updateAddition(position)
         {
             var xdist = Math.abs(selectedCollection.left() - c.right());
             var ydist = Math.abs(selectedCollection.top() - c.top());
-            if (xdist < 15 && ydist < 30 && xdist < nearestDist)
+            if (xdist < 20 && ydist < 30 && xdist < nearestDist)
             {
                 nearest = c;
                 nearestDist = xdist;
                 nearestDirection = "right";
             }
             var xdist = Math.abs(c.left() - selectedCollection.right());
-            if (xdist < 15 && ydist < 30 && xdist < nearestDist)
+            if (xdist < 20 && ydist < 30 && xdist < nearestDist)
             {
                 nearest = c;
                 nearestDist = xdist;
@@ -137,14 +137,14 @@ function updateAddition(position)
         {
             var xdist = Math.abs(selectedCollection.left() - c.left());
             var ydist = Math.abs(selectedCollection.bottom() - c.top());
-            if (xdist < 30 && ydist < 15 && ydist < nearestDist)
+            if (xdist < 30 && ydist < 20 && ydist < nearestDist)
             {
                 nearest = c;
                 nearestDist = ydist;
                 nearestDirection = "top";
             }
             var ydist = Math.abs(c.bottom() - selectedCollection.top());
-            if (xdist < 30 && ydist < 15 && ydist < nearestDist)
+            if (xdist < 30 && ydist < 20 && ydist < nearestDist)
             {
                 nearest = c;
                 nearestDist = ydist;
